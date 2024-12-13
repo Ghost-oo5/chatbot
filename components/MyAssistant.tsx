@@ -1,18 +1,14 @@
 "use client";
 
-import { useEdgeRuntime } from "@assistant-ui/react";
+import React from "react";
+import MyRuntimeProvider from "../app/MyRuntimeProvider";
 import { Thread } from "@assistant-ui/react";
-import { makeMarkdownText } from "@assistant-ui/react-markdown";
+import { useEdgeRuntime } from "@assistant-ui/react";
 
-const MarkdownText = makeMarkdownText();
+const MyAssistant = () => (
+  <MyRuntimeProvider>
+    {(runtime: ReturnType<typeof useEdgeRuntime>) => <Thread runtime={runtime} />}
+  </MyRuntimeProvider>
+);
 
-export function MyAssistant() {
-  const runtime = useEdgeRuntime({ api: "/api/chat" });
-
-  return (
-    <Thread
-      runtime={runtime}
-      assistantMessage={{ components: { Text: MarkdownText } }}
-    />
-  );
-}
+export default MyAssistant;
